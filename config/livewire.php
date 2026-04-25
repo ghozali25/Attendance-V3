@@ -184,4 +184,17 @@ return [
 
     'release_token' => 'a',
     'asset_url' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Request Timeout
+    |--------------------------------------------------------------------------
+    |
+    | The amount of time (in seconds) to wait for a Livewire request to complete
+    | before timing out. This is especially important for mobile devices with
+    | slower network connections.
+    |
+    */
+
+    'request_timeout' => 120,
 ];
