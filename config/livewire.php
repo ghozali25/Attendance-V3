@@ -196,5 +196,5 @@ return [
     |
     */
 
-    'request_timeout' => 120,
+    'request_timeout' => 3600,
 ];
