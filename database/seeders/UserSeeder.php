@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
                 'email' => 'ali@alitech.com',
                 'phone' => '081234567890',
                 'address' => 'Jakarta',
+                'gender' => 'male',
                 'password' => Hash::make('password'),
             ],
             [
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
                 'email' => 'idham.maulana@alitech.com',
                 'phone' => '081234567891',
                 'address' => 'Jakarta',
+                'gender' => 'male',
                 'password' => Hash::make('password'),
             ],
             [
@@ -34,6 +36,7 @@ class UserSeeder extends Seeder
                 'email' => 'maulana.hasan@alitech.com',
                 'phone' => '081234567892',
                 'address' => 'Jakarta',
+                'gender' => 'male',
                 'password' => Hash::make('password'),
             ],
             [
@@ -41,6 +44,7 @@ class UserSeeder extends Seeder
                 'email' => 'marsha@alitech.com',
                 'phone' => '081234567893',
                 'address' => 'Jakarta',
+                'gender' => 'female',
                 'password' => Hash::make('password'),
             ],
             [
@@ -48,6 +52,7 @@ class UserSeeder extends Seeder
                 'email' => 'novelda@alitech.com',
                 'phone' => '081234567894',
                 'address' => 'Jakarta',
+                'gender' => 'female',
                 'password' => Hash::make('password'),
             ],
             [
@@ -55,6 +60,7 @@ class UserSeeder extends Seeder
                 'email' => 'wisnu@alitech.com',
                 'phone' => '081234567895',
                 'address' => 'Jakarta',
+                'gender' => 'male',
                 'password' => Hash::make('password'),
             ],
         ];
@@ -66,6 +72,7 @@ class UserSeeder extends Seeder
                     'name' => $user['name'],
                     'phone' => $user['phone'],
                     'address' => $user['address'],
+                    'gender' => $user['gender'],
                     'password' => $user['password'],
                 ]
             );

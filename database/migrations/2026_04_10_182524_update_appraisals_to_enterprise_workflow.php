@@ -40,7 +40,18 @@ return new class extends Migration
                     ->default('draft')
                     ->after('period_year');
             });
+        } elseif (\Illuminate\Support\Facades\DB::getDriverName() === 'pgsql') {
+            // PostgreSQL: Create ENUM type, alter evaluator_id, then add status column
+            \Illuminate\Support\Facades\DB::statement("DO $$ BEGIN
+                IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'appraisals_status_enum') THEN
+                    CREATE TYPE appraisals_status_enum AS ENUM ('draft', 'self_assessment', 'manager_review', '1on1_scheduled', 'completed');
+                END IF;
+            END $$");
+
+            \Illuminate\Support\Facades\DB::statement("ALTER TABLE appraisals ALTER COLUMN evaluator_id TYPE CHAR(26)");
+            \Illuminate\Support\Facades\DB::statement("ALTER TABLE appraisals ADD COLUMN status appraisals_status_enum DEFAULT 'draft'");
         } else {
+            // MySQL: Use MODIFY COLUMN
             \Illuminate\Support\Facades\DB::statement("ALTER TABLE appraisals MODIFY evaluator_id CHAR(26) NULL");
             \Illuminate\Support\Facades\DB::statement("ALTER TABLE appraisals ADD COLUMN status ENUM('draft', 'self_assessment', 'manager_review', '1on1_scheduled', 'completed') DEFAULT 'draft' AFTER period_year");
         }

@@ -49,19 +49,31 @@ return new class extends Migration
         }
 
         try {
-            DB::statement('ALTER TABLE `system_backup_runs` DROP FOREIGN KEY `system_backup_runs_requested_by_user_id_foreign`');
+            if (DB::getDriverName() === 'pgsql') {
+                DB::statement('ALTER TABLE system_backup_runs DROP CONSTRAINT IF EXISTS system_backup_runs_requested_by_user_id_foreign');
+            } else {
+                DB::statement('ALTER TABLE `system_backup_runs` DROP FOREIGN KEY `system_backup_runs_requested_by_user_id_foreign`');
+            }
         } catch (\Throwable $e) {
             // Ignore missing constraints from partially applied migrations.
         }
 
         try {
-            DB::statement('ALTER TABLE `system_backup_runs` MODIFY `requested_by_user_id` CHAR(26) NULL');
+            if (DB::getDriverName() === 'pgsql') {
+                // PostgreSQL: No need to modify type, char(26) is already correct
+            } else {
+                DB::statement('ALTER TABLE `system_backup_runs` MODIFY `requested_by_user_id` CHAR(26) NULL');
+            }
         } catch (\Throwable $e) {
             // Ignore unsupported change attempts when the column is already compatible.
         }
 
         try {
-            DB::statement('ALTER TABLE `system_backup_runs` ADD CONSTRAINT `system_backup_runs_requested_by_user_id_foreign` FOREIGN KEY (`requested_by_user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL');
+            if (DB::getDriverName() === 'pgsql') {
+                DB::statement('ALTER TABLE system_backup_runs ADD CONSTRAINT system_backup_runs_requested_by_user_id_foreign FOREIGN KEY (requested_by_user_id) REFERENCES users(id) ON DELETE SET NULL');
+            } else {
+                DB::statement('ALTER TABLE `system_backup_runs` ADD CONSTRAINT `system_backup_runs_requested_by_user_id_foreign` FOREIGN KEY (`requested_by_user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL');
+            }
         } catch (\Throwable $e) {
             // Ignore duplicate constraints when the repair already succeeded.
         }
