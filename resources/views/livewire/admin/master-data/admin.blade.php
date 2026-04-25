@@ -607,7 +607,7 @@
         @if ($form->user)
             @php
                 $division = $form->user->division ? json_decode($form->user->division)->name : '-';
-                $jobTitle = $form->user->jobTitle ? json_decode($form->user->jobTitle)->name : '-';
+                $jobTitle = $form->user->jobLevel ? $form->user->jobLevel->name : '-';
                 $education = $form->user->education ? json_decode($form->user->education)->name : '-';
             @endphp
             <div class="px-6 py-4">

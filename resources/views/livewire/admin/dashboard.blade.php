@@ -578,7 +578,7 @@
                                     <p class="truncate text-sm font-semibold text-slate-900 dark:text-white">
                                         {{ $employee->name }}</p>
                                     <p class="text-xs text-slate-500 dark:text-slate-400">
-                                        {{ $employee->jobTitle?->name ?? __('Staff') }}</p>
+                                        {{ $employee->jobLevel?->name ?? __('Staff') }}</p>
                                 </div>
                             </div>
                             <span

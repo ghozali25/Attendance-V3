@@ -114,7 +114,7 @@
                                 <td class="px-6 py-4">
                                     <div class="flex flex-col gap-2">
                                         <x-admin.status-badge tone="success" class="w-fit">
-                                            {{ $user->jobTitle ? json_decode($user->jobTitle)->name : __('No job title') }}
+                                            {{ $user->jobLevel?->name ?? __('No job level') }}
                                         </x-admin.status-badge>
                                         <div class="text-sm font-medium text-slate-700 dark:text-slate-200">
                                             {{ $user->division ? json_decode($user->division)->name : __('No division') }}
@@ -175,7 +175,7 @@
                                     <h4 class="truncate pr-2 text-sm font-semibold leading-5 text-gray-900 dark:text-white">
                                         {{ $user->name }}</h4>
                                     <x-admin.status-badge tone="success" class="shrink-0">
-                                        {{ $user->jobTitle ? json_decode($user->jobTitle)->name : __('No title') }}
+                                        {{ $user->jobLevel?->name ?? __('No level') }}
                                     </x-admin.status-badge>
                                 </div>
                                 <p class="mt-1 truncate text-xs text-gray-500 dark:text-gray-400">{{ $user->email }}</p>
@@ -646,7 +646,7 @@
                                 <p class="mt-2 break-all text-sm text-slate-500 dark:text-slate-400">{{ $form->user->email }}</p>
                                 <div class="mt-4 flex flex-wrap gap-2.5">
                                     <span class="inline-flex items-center rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
-                                        {{ $form->user->jobTitle?->name ?? __('No job title') }}
+                                        {{ $form->user->jobLevel?->name ?? __('No job level') }}
                                     </span>
                                     <span class="inline-flex items-center rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
                                         {{ $form->user->division?->name ?? __('No division') }}
@@ -682,7 +682,7 @@
                             <dl class="mt-5 space-y-4">
                                 <div class="flex flex-col gap-1 border-b border-slate-200 pb-4 dark:border-slate-800 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
                                     <dt class="text-sm text-slate-500 dark:text-slate-400">{{ __('Job Title') }}</dt>
-                                    <dd class="text-sm font-semibold text-slate-950 dark:text-white sm:text-right">{{ $form->user->jobTitle?->name ?? '-' }}</dd>
+                                    <dd class="text-sm font-semibold text-slate-950 dark:text-white sm:text-right">{{ $form->user->jobLevel?->name ?? '-' }}</dd>
                                 </div>
                                 <div class="flex flex-col gap-1 border-b border-slate-200 pb-4 dark:border-slate-800 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
                                     <dt class="text-sm text-slate-500 dark:text-slate-400">{{ __('Division') }}</dt>

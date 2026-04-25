@@ -399,7 +399,7 @@
                                 <p class="truncate text-sm font-semibold text-slate-900 dark:text-white">
                                     {{ $employee->name }}</p>
                                 <p class="text-xs text-slate-500 dark:text-slate-400">
-                                    {{ $employee->jobTitle?->name ?? __('Employee') }}</p>
+                                    {{ $employee->jobLevel?->name ?? __('Employee') }}</p>
                             </div>
                             <span
                                 class="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-300">

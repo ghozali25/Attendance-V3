@@ -185,7 +185,7 @@
                                 <td class="px-6 py-4 text-gray-500 dark:text-gray-400">
                                     {{ $employee->division?->name ?? '-' }}</td>
                                 <td class="px-6 py-4 text-gray-500 dark:text-gray-400">
-                                    {{ $employee->jobTitle?->name ?? '-' }}</td>
+                                    {{ $employee->jobLevel?->name ?? '-' }}</td>
                                 @if ($isPerDayFilter)
                                     @php
                                         $attendance = $employee->attendances->first();
@@ -318,7 +318,7 @@
                         <div>
                             <h4 class="font-bold text-gray-900 dark:text-white">{{ $employee->name }}</h4>
                             <p class="text-xs text-gray-500">{{ $employee->division?->name }} •
-                                {{ $employee->jobTitle?->name }}</p>
+                                {{ $employee->jobLevel?->name }}</p>
                         </div>
                         @if ($isPerDayFilter)
                             @php
