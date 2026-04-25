@@ -96,7 +96,7 @@
                                                 {{ $leave->user->name }}
                                             </div>
                                             <div class="text-xs text-gray-500 dark:text-gray-400">
-                                                {{ $leave->user->jobTitle->name ?? __('N/A') }}
+                                                {{ $leave->user->jobLevel?->name ?? __('N/A') }}
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +172,7 @@
                                     {{ $leave->user->name }}
                                 </div>
                                 <div class="text-xs text-gray-500 dark:text-gray-400">
-                                    {{ $leave->user->jobTitle->name ?? __('N/A') }}
+                                    {{ $leave->user->jobLevel?->name ?? __('N/A') }}
                                 </div>
                             </div>
                         </div>
@@ -271,7 +271,7 @@
                                                 {{ $reimbursement->user->name }}
                                             </div>
                                             <div class="text-xs text-gray-500 dark:text-gray-400">
-                                                {{ $reimbursement->user->jobTitle->name ?? __('N/A') }}
+                                                {{ $reimbursement->user->jobLevel?->name ?? __('N/A') }}
                                             </div>
                                         </div>
                                     </div>
@@ -341,7 +341,7 @@
                                     {{ $reimbursement->user->name }}
                                 </div>
                                 <div class="text-xs text-gray-500 dark:text-gray-400">
-                                    {{ $reimbursement->user->jobTitle->name ?? __('N/A') }}
+                                    {{ $reimbursement->user->jobLevel?->name ?? __('N/A') }}
                                 </div>
                             </div>
                         </div>
@@ -417,7 +417,7 @@
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $overtime->user->name }}</div>
-                                            <div class="text-xs text-gray-500 dark:text-gray-400">{{ $overtime->user->jobTitle->name ?? __('N/A') }}</div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">{{ $overtime->user->jobLevel?->name ?? __('N/A') }}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -470,7 +470,7 @@
                             <img class="h-10 w-10 rounded-full object-cover" src="{{ $overtime->user->profile_photo_url }}" alt="{{ $overtime->user->name }}">
                             <div class="ml-3">
                                 <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $overtime->user->name }}</div>
-                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $overtime->user->jobTitle->name ?? __('N/A') }}</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $overtime->user->jobLevel?->name ?? __('N/A') }}</div>
                             </div>
                         </div>
                         <span class="bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200 px-2 py-1 text-xs font-semibold rounded-full">
@@ -534,7 +534,7 @@
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $kasbon->user->name }}</div>
-                                            <div class="text-xs text-gray-500 dark:text-gray-400">{{ $kasbon->user->jobTitle->name ?? __('N/A') }}</div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">{{ $kasbon->user->jobLevel?->name ?? __('N/A') }}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -588,7 +588,7 @@
                             <img class="h-10 w-10 rounded-full object-cover" src="{{ $kasbon->user->profile_photo_url }}" alt="{{ $kasbon->user->name }}">
                             <div class="ml-3">
                                 <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $kasbon->user->name }}</div>
-                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $kasbon->user->jobTitle->name ?? __('N/A') }}</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $kasbon->user->jobLevel?->name ?? __('N/A') }}</div>
                             </div>
                         </div>
                         <span class="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200 px-2 py-1 text-xs font-semibold rounded-full">Rp</span>
