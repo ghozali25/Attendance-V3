@@ -168,7 +168,7 @@ class Attendance extends Model
             });
         })->when($jobTitle && !$userId, function (Builder $query) use ($jobTitle) {
             $query->whereHas('user', function (Builder $query) use ($jobTitle) {
-                $query->where('job_title_id', $jobTitle);
+                $query->where('job_level_id', $jobTitle);
             });
         })->when($education && !$userId, function (Builder $query) use ($education) {
             $query->whereHas('user', function (Builder $query) use ($education) {
