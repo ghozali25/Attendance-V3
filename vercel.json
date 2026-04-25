@@ -55,6 +55,10 @@
             "dest": "/robots.txt"
         },
         {
+            "src": "/offline.html",
+            "dest": "/offline.html"
+        },
+        {
             "src": "/favicon.ico",
             "dest": "/images/icons/favicon.ico"
         },
