@@ -35,6 +35,7 @@ class EnsureSecurityHeaders
         $cspConfig = [
             "default-src 'self'",
             "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com",
+            "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.bunny.net",
             "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net data:",
             "img-src 'self' data: blob: https: http:",
