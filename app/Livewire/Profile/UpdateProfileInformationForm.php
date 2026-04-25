@@ -5,6 +5,7 @@ namespace App\Livewire\Profile;
 use App\Models\Division;
 use App\Models\Education;
 use App\Models\JobLevel;
+use Illuminate\Support\Facades\Schema;
 use Laravel\Jetstream\Http\Livewire\UpdateProfileInformationForm as JetstreamUpdateProfileInformationForm;
 
 class UpdateProfileInformationForm extends JetstreamUpdateProfileInformationForm
@@ -16,12 +17,22 @@ class UpdateProfileInformationForm extends JetstreamUpdateProfileInformationForm
     public function mount()
     {
         parent::mount();
-        $this->divisions = Division::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
-        $this->educations = Education::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
-        $this->jobLevels = JobLevel::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
+        
+        try {
+            $this->divisions = Division::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
+            $this->educations = Education::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
+            $this->jobLevels = JobLevel::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
 
-        // Force job_level_id into state
-        $this->state['job_level_id'] = $this->user->job_level_id;
+            // Check if job_level_id column exists in users table
+            if (Schema::hasColumn('users', 'job_level_id')) {
+                $this->state['job_level_id'] = $this->user->job_level_id;
+            }
+        } catch (\Exception $e) {
+            // Fallback to empty arrays if queries fail
+            $this->divisions = [];
+            $this->educations = [];
+            $this->jobLevels = [];
+        }
     }
 
     /**
@@ -34,8 +45,13 @@ class UpdateProfileInformationForm extends JetstreamUpdateProfileInformationForm
         $user = $this->user;
         $parentInfo = parent::getUserProfileInformation();
 
-        return array_merge($parentInfo, [
-            'job_level_id' => $user->job_level_id,
-        ]);
+        // Only add job_level_id if the column exists
+        if (Schema::hasColumn('users', 'job_level_id')) {
+            return array_merge($parentInfo, [
+                'job_level_id' => $user->job_level_id,
+            ]);
+        }
+
+        return $parentInfo;
     }
 }
