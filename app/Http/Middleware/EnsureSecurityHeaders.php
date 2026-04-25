@@ -15,6 +15,11 @@ class EnsureSecurityHeaders
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Force HTTPS in production
+        if (app()->environment('production') && !$request->secure()) {
+            return redirect()->secure($request->getRequestUri());
+        }
+
         $response = $next($request);
 
         // Core Security Headers
