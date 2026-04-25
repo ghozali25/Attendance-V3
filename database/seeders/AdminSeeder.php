@@ -14,15 +14,22 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->admin(superadmin: true)->create([
-            'name' => 'Super Admin',
-            'email' => 'superadmin@example.com',
-            'password' => Hash::make('superadmin'),
-        ]);
-        User::factory()->admin()->create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('admin'),
-        ]);
+        User::firstOrCreate(
+            ['email' => 'superadmin@example.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => Hash::make('superadmin'),
+                'gender' => 'male',
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('admin'),
+                'gender' => 'male',
+            ]
+        );
     }
 }
