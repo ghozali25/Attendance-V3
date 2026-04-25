@@ -347,39 +347,24 @@
         <!-- Division -->
         <div class="col-span-6 xl:col-span-2">
             <x-forms.label for="division" value="{{ __('Division') }}" />
-            <select id="division" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                wire:model.live="state.division_id">
-                <option value="">{{ __('Select Division') }}</option>
-                @foreach(App\Models\Division::all() as $division)
-                    <option value="{{ $division->id }}">{{ $division->name }}</option>
-                @endforeach
-            </select>
+            <x-forms.tom-select id="division" class="mt-1 block w-full" wire:model.live="state.division_id"
+                :options="App\Models\Division::pluck('name', 'id')" placeholder="{{ __('Select Division') }}" />
             <x-forms.input-error for="division" class="mt-2" />
         </div>
 
         <!-- Education -->
         <div class="col-span-6 xl:col-span-2">
             <x-forms.label for="education" value="{{ __('Last Education') }}" />
-            <select id="education" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                wire:model.live="state.education_id">
-                <option value="">{{ __('Select Education') }}</option>
-                @foreach(App\Models\Education::all() as $education)
-                    <option value="{{ $education->id }}">{{ $education->name }}</option>
-                @endforeach
-            </select>
+            <x-forms.tom-select id="education" class="mt-1 block w-full" wire:model.live="state.education_id"
+                :options="App\Models\Education::pluck('name', 'id')" placeholder="{{ __('Select Education') }}" />
             <x-forms.input-error for="education" class="mt-2" />
         </div>
 
         <!-- Job Level -->
         <div class="col-span-6 xl:col-span-2">
             <x-forms.label for="job_level" value="{{ __('Job Level') }}" />
-            <select id="job_level" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                wire:model.live="state.job_level_id">
-                <option value="">{{ __('Select Job Level') }}</option>
-                @foreach(App\Models\JobLevel::all() as $jobLevel)
-                    <option value="{{ $jobLevel->id }}">{{ $jobLevel->name }}</option>
-                @endforeach
-            </select>
+            <x-forms.tom-select id="job_level" class="mt-1 block w-full" wire:model.live="state.job_level_id"
+                :options="App\Models\JobLevel::pluck('name', 'id')" placeholder="{{ __('Select Job Level') }}" />
             <x-forms.input-error for="job_level" class="mt-2" />
         </div>
 
