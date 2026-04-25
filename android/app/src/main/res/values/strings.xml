@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Ali Attendance</string>
+    <string name="title_activity_main">Ali Attendance</string>
+    <string name="package_name">com.ali.tech</string>
+    <string name="custom_url_scheme">com.ali.tech</string>
+</resources>
