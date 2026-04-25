@@ -115,7 +115,6 @@ return [
     */
 
     'inject_assets' => false,
-    'asset_url' => null,
 
     /*
     |---------------------------------------------------------------------------
@@ -184,5 +183,5 @@ return [
     */
 
     'release_token' => 'a',
-    'asset_url' => env('APP_URL'),
+    'asset_url' => null,
 ];
