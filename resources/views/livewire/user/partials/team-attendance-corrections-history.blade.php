@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $correction->user->name }}</div>
-                                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ $correction->user->jobTitle->name ?? __('N/A') }}</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ $correction->user->jobLevel?->name ?? __('N/A') }}</div>
                                 </div>
                             </div>
                         </td>
@@ -70,7 +70,7 @@
                         alt="{{ $correction->user->name }}">
                     <div class="ml-3">
                         <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $correction->user->name }}</div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400">{{ $correction->user->jobTitle->name ?? __('N/A') }}</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">{{ $correction->user->jobLevel?->name ?? __('N/A') }}</div>
                     </div>
                 </div>
                 <span class="px-2 py-1 text-xs font-semibold rounded-full

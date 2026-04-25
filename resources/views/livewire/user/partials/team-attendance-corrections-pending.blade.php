@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $correction->user->name }}</div>
-                                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ $correction->user->jobTitle->name ?? __('N/A') }}</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ $correction->user->jobLevel?->name ?? __('N/A') }}</div>
                                 </div>
                             </div>
                         </td>
@@ -88,7 +88,7 @@
                         alt="{{ $correction->user->name }}">
                     <div class="ml-3 min-w-0">
                         <div class="truncate text-sm font-medium text-gray-900 dark:text-white">{{ $correction->user->name }}</div>
-                        <div class="truncate text-xs text-gray-500 dark:text-gray-400">{{ $correction->user->jobTitle->name ?? __('N/A') }}</div>
+                        <div class="truncate text-xs text-gray-500 dark:text-gray-400">{{ $correction->user->jobLevel?->name ?? __('N/A') }}</div>
                     </div>
                 </div>
                 <span class="shrink-0 rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-800 dark:bg-amber-900 dark:text-amber-200">
