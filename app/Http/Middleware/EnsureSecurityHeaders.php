@@ -37,14 +37,15 @@ class EnsureSecurityHeaders
         $response->headers->set('Permissions-Policy', 'geolocation=(self), camera=(self), microphone=(self)');
 
         // Content Security Policy
+        $origin = $request->getSchemeAndHttpHost();
         $cspConfig = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com",
-            "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://attendance-v3.vercel.app https://cdn.jsdelivr.net https://unpkg.com",
+            "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://attendance-v3.vercel.app https://cdn.jsdelivr.net https://unpkg.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.bunny.net",
             "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net data:",
-            "img-src 'self' data: blob: https: http:",
-            "connect-src 'self' https://tile.openstreetmap.org https://cdn.jsdelivr.net https://unpkg.com wss:",
+            "img-src 'self' data: blob: https:",
+            "connect-src 'self' https://attendance-v3.vercel.app wss: https://tile.openstreetmap.org https://cdn.jsdelivr.net https://unpkg.com",
             "frame-ancestors 'self'",
             "base-uri 'self'",
             "form-action 'self'",
