@@ -348,7 +348,7 @@
         <div class="col-span-6 xl:col-span-2">
             <x-forms.label for="division" value="{{ __('Division') }}" />
             <x-forms.tom-select id="division" class="mt-1 block w-full" wire:model.live="state.division_id"
-                :options="App\Models\Division::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()" placeholder="{{ __('Select Division') }}" />
+                :options="$this->divisions" placeholder="{{ __('Select Division') }}" />
             <x-forms.input-error for="division" class="mt-2" />
         </div>
 
@@ -356,7 +356,7 @@
         <div class="col-span-6 xl:col-span-2">
             <x-forms.label for="education" value="{{ __('Last Education') }}" />
             <x-forms.tom-select id="education" class="mt-1 block w-full" wire:model.live="state.education_id"
-                :options="App\Models\Education::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()" placeholder="{{ __('Select Education') }}" />
+                :options="$this->educations" placeholder="{{ __('Select Education') }}" />
             <x-forms.input-error for="education" class="mt-2" />
         </div>
 
@@ -364,7 +364,7 @@
         <div class="col-span-6 xl:col-span-2">
             <x-forms.label for="job_level" value="{{ __('Job Level') }}" />
             <x-forms.tom-select id="job_level" class="mt-1 block w-full" wire:model.live="state.job_level_id"
-                :options="App\Models\JobLevel::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()" placeholder="{{ __('Select Job Level') }}" />
+                :options="$this->jobLevels" placeholder="{{ __('Select Job Level') }}" />
             <x-forms.input-error for="job_level" class="mt-2" />
         </div>
 
