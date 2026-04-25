@@ -70,8 +70,10 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_KEY": "base64:apdWiqNsjaN79TvxX/JrwduuGugFjLjA5BUCjwJJ3HQ=",
-        "APP_URL": "https://attendance-v2-zeta.vercel.app",
+        "APP_KEY": "base64:Cz4jBhK4T5KINEOQ/+3tGUxUHd9IPTs9YtLnv53bDhI=",
+        "APP_URL": "https://attendance-v3.vercel.app",
+        "ASSET_URL": "https://attendance-v3.vercel.app",
+        "LIVEWIRE_ASSET_URL": "https://attendance-v3.vercel.app",
         "DB_CONNECTION": "pgsql",
         "DB_HOST": "aws-1-us-east-1.pooler.supabase.com",
         "DB_PORT": "6543",
