@@ -23,7 +23,10 @@ return new class extends Migration
                 END IF;
             END $$");
 
+            // Drop default, alter type, then set default back
+            \Illuminate\Support\Facades\DB::statement("ALTER TABLE attendances ALTER COLUMN status DROP DEFAULT");
             \Illuminate\Support\Facades\DB::statement("ALTER TABLE attendances ALTER COLUMN status TYPE attendances_status_enum USING status::text::attendances_status_enum");
+            \Illuminate\Support\Facades\DB::statement("ALTER TABLE attendances ALTER COLUMN status SET DEFAULT 'absent'");
         } else {
             // MySQL: Use MODIFY COLUMN
             \Illuminate\Support\Facades\DB::statement("ALTER TABLE attendances MODIFY COLUMN status ENUM('present', 'late', 'excused', 'sick', 'absent', 'rejected') DEFAULT 'absent'");
