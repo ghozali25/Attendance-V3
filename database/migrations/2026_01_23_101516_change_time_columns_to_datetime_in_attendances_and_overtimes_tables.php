@@ -44,6 +44,14 @@ return new class extends Migration
             DB::statement("UPDATE overtimes SET start_time_dt = date || ' ' || start_time WHERE start_time IS NOT NULL");
             DB::statement("UPDATE overtimes SET end_time_dt = date || ' ' || end_time WHERE end_time IS NOT NULL");
             DB::statement("UPDATE overtimes SET end_time_dt = datetime(end_time_dt, '+1 day') WHERE end_time_dt < start_time_dt");
+        } elseif ($driver === 'pgsql') {
+            DB::statement("UPDATE attendances SET time_in_dt = (date || ' ' || time_in)::timestamp WHERE time_in IS NOT NULL");
+            DB::statement("UPDATE attendances SET time_out_dt = (date || ' ' || time_out)::timestamp WHERE time_out IS NOT NULL");
+            DB::statement("UPDATE attendances SET time_out_dt = time_out_dt + INTERVAL '1 day' WHERE time_out_dt < time_in_dt");
+
+            DB::statement("UPDATE overtimes SET start_time_dt = (date || ' ' || start_time)::timestamp WHERE start_time IS NOT NULL");
+            DB::statement("UPDATE overtimes SET end_time_dt = (date || ' ' || end_time)::timestamp WHERE end_time IS NOT NULL");
+            DB::statement("UPDATE overtimes SET end_time_dt = end_time_dt + INTERVAL '1 day' WHERE end_time_dt < start_time_dt");
         } else {
             DB::statement("UPDATE attendances SET time_in_dt = CONCAT(date, ' ', time_in) WHERE time_in IS NOT NULL");
             DB::statement("UPDATE attendances SET time_out_dt = CONCAT(date, ' ', time_out) WHERE time_out IS NOT NULL");
@@ -78,14 +86,20 @@ return new class extends Migration
     public function down(): void
     {
         // Reverting this is complex (lossy). We will just convert back to time only.
-        
+
+        $driver = DB::getDriverName();
+
         Schema::table('attendances', function (Blueprint $table) {
             $table->time('time_in_old')->nullable();
             $table->time('time_out_old')->nullable();
         });
-        
-        DB::statement("UPDATE attendances SET time_in_old = TIME(time_in), time_out_old = TIME(time_out)");
-        
+
+        if ($driver === 'pgsql') {
+            DB::statement("UPDATE attendances SET time_in_old = time_in::time, time_out_old = time_out::time");
+        } else {
+            DB::statement("UPDATE attendances SET time_in_old = TIME(time_in), time_out_old = TIME(time_out)");
+        }
+
         Schema::table('attendances', function (Blueprint $table) {
             $table->dropColumn(['time_in', 'time_out']);
             $table->renameColumn('time_in_old', 'time_in');
@@ -97,7 +111,11 @@ return new class extends Migration
             $table->time('end_time_old')->nullable();
         });
 
-        DB::statement("UPDATE overtimes SET start_time_old = TIME(start_time), end_time_old = TIME(end_time)");
+        if ($driver === 'pgsql') {
+            DB::statement("UPDATE overtimes SET start_time_old = start_time::time, end_time_old = end_time::time");
+        } else {
+            DB::statement("UPDATE overtimes SET start_time_old = TIME(start_time), end_time_old = TIME(end_time)");
+        }
 
         Schema::table('overtimes', function (Blueprint $table) {
             $table->dropColumn(['start_time', 'end_time']);
