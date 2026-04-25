@@ -59,7 +59,7 @@
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $advance->user->name }}</div>
                                     <div class="text-xs text-gray-500 dark:text-gray-400">
-                                        {{ $advance->user->jobTitle->name ?? '-' }} ({{ __('Rank') }} {{ $advance->user->jobTitle->jobLevel->rank ?? '-' }})
+                                        {{ $advance->user->jobLevel?->name ?? '-' }} ({{ __('Rank') }} {{ $advance->user->jobLevel?->rank ?? '-' }})
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                             <div class="flex items-center justify-end gap-2">
                                 @php
                                     $user = Auth::user();
-                                    $isFinanceHead = ($user->isAdmin || $user->isSuperadmin || ($user->jobTitle?->jobLevel?->rank <= 2 && $user->division && strtolower($user->division->name) === 'finance'));
+                                    $isFinanceHead = ($user->isAdmin || $user->isSuperadmin || ($user->jobLevel?->rank <= 2 && $user->division && strtolower($user->division->name) === 'finance'));
                                     $canApprove = false;
                                     if ($advance->status === 'pending') $canApprove = true;
                                     if ($advance->status === 'pending_finance' && $isFinanceHead) $canApprove = true;
@@ -143,7 +143,7 @@
                     <img class="h-10 w-10 rounded-full object-cover" src="{{ $advance->user->profile_photo_url }}" alt="{{ $advance->user->name }}">
                     <div class="ml-3 min-w-0">
                         <div class="truncate text-sm font-medium text-gray-900 dark:text-white">{{ $advance->user->name }}</div>
-                        <div class="truncate text-xs text-gray-500 dark:text-gray-400">{{ $advance->user->jobTitle->name ?? '-' }}</div>
+                        <div class="truncate text-xs text-gray-500 dark:text-gray-400">{{ $advance->user->jobLevel?->name ?? '-' }}</div>
                     </div>
                 </div>
                 <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5
@@ -190,7 +190,7 @@
             <div class="mt-4 flex flex-wrap gap-2">
                 @php
                     $user = Auth::user();
-                    $isFinanceHead = ($user->isAdmin || $user->isSuperadmin || ($user->jobTitle?->jobLevel?->rank <= 2 && $user->division && strtolower($user->division->name) === 'finance'));
+                    $isFinanceHead = ($user->isAdmin || $user->isSuperadmin || ($user->jobLevel?->rank <= 2 && $user->division && strtolower($user->division->name) === 'finance'));
                     $canApprove = false;
                     if ($advance->status === 'pending') $canApprove = true;
                     if ($advance->status === 'pending_finance' && $isFinanceHead) $canApprove = true;
@@ -262,7 +262,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $user->name }}</div>
-                                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ $user->jobTitle->name ?? '-' }}</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ $user->jobLevel?->name ?? '-' }}</div>
                                 </div>
                             </div>
                         </td>
@@ -327,7 +327,7 @@
                 <img class="h-10 w-10 rounded-full object-cover" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}">
                 <div class="min-w-0">
                     <div class="truncate text-sm font-medium text-gray-900 dark:text-white">{{ $user->name }}</div>
-                    <div class="truncate text-xs text-gray-500 dark:text-gray-400">{{ $user->jobTitle->name ?? '-' }}</div>
+                    <div class="truncate text-xs text-gray-500 dark:text-gray-400">{{ $user->jobLevel?->name ?? '-' }}</div>
                 </div>
             </div>
 
