@@ -221,17 +221,21 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getSubordinatesAttribute()
     {
-        if (!$this->division_id || !$this->jobLevel) {
+        try {
+            if (!$this->division_id || !$this->job_level_id || !$this->jobLevel) {
+                return collect();
+            }
+
+            $myRank = $this->jobLevel->rank;
+
+            return User::where('division_id', $this->division_id)
+                ->whereHas('jobLevel', function ($q) use ($myRank) {
+                    $q->where('rank', '>', $myRank);
+                })
+                ->get();
+        } catch (\Exception $e) {
             return collect();
         }
-
-        $myRank = $this->jobLevel->rank;
-
-        return User::where('division_id', $this->division_id)
-            ->whereHas('jobLevel', function ($q) use ($myRank) {
-                $q->where('rank', '>', $myRank);
-            })
-            ->get();
     }
 
     /**
