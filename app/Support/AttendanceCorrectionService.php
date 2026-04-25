@@ -44,7 +44,7 @@ class AttendanceCorrectionService
     public function managementQuery(User $actor, string $statusFilter = 'pending', string $typeFilter = 'all', string $search = ''): Builder
     {
         return AttendanceCorrection::query()
-            ->with(['user.jobLevel', 'attendance.shift', 'requestedShift', 'headApprover', 'reviewer'])
+            ->with(['user', 'attendance.shift', 'requestedShift', 'headApprover', 'reviewer'])
             ->when(! $actor->can('accessAdminPanel'), function (Builder $query) use ($actor) {
                 $query->whereIn('user_id', $this->approvalActors->subordinateIds($actor))
                     ->where('status', AttendanceCorrection::STATUS_PENDING);
