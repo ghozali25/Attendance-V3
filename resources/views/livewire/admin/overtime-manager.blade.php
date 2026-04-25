@@ -75,7 +75,7 @@
                                     </h4>
                                     <p class="text-xs text-gray-500 dark:text-gray-400">
                                         {{ $overtime->user->division?->name ?? '-' }} •
-                                        {{ $overtime->user->jobTitle?->name ?? '-' }}
+                                        {{ $overtime->user->jobLevel?->name ?? '-' }}
                                     </p>
                                     <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">
                                         {{ $overtime->date->format('d M Y') }} •

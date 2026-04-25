@@ -95,7 +95,7 @@
                                         <div class="font-medium text-gray-900 dark:text-white">
                                             {{ $firstLeave->user->name }}</div>
                                         <div class="text-xs text-gray-500 dark:text-gray-400">
-                                            {{ $firstLeave->user->jobTitle->name ?? '-' }}</div>
+                                            {{ $firstLeave->user->jobLevel?->name ?? '-' }}</div>
                                     </div>
                                 </div>
                             </td>

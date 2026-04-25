@@ -125,7 +125,7 @@
                                     $isFinanceHead =
                                         $user->is_admin ||
                                         $user->is_superadmin ||
-                                        ($user->jobTitle?->jobLevel?->rank <= 2 &&
+                                        ($user->jobLevel?->rank <= 2 &&
                                             $user->division &&
                                             strtolower($user->division->name) === 'finance');
                                     $canApprove = false;

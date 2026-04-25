@@ -131,7 +131,7 @@
                                             <div class="text-sm font-medium text-gray-900 dark:text-white">
                                                 {{ $payroll->user?->name ?? __('Unknown User') }}</div>
                                             <div class="text-xs text-gray-500 dark:text-gray-400">
-                                                {{ $payroll->user?->jobTitle->name ?? '-' }}</div>
+                                                {{ $payroll->user?->jobLevel?->name ?? '-' }}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -166,7 +166,7 @@
                                             <x-actions.icon-button
                                                 @click="detailPayroll = {{ json_encode([
                                                     'name' => $payroll->user?->name,
-                                                    'job' => $payroll->user?->jobTitle->name ?? '-',
+                                                    'job' => $payroll->user?->jobLevel?->name ?? '-',
                                                     'basic_salary' => $payroll->basic_salary,
                                                     'overtime_pay' => $payroll->overtime_pay,
                                                     'allowances' => $payroll->allowances ?? [],

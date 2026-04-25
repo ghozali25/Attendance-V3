@@ -368,7 +368,7 @@
                                         <td class="{{ $tdClass }} font-mono text-xs">{{ number_format($user->basic_salary, 0) }}</td>
                                         <td class="{{ $tdClass }}">
                                             <div class="text-xs">
-                                                <div class="font-medium">{{ $user->jobTitle?->name ?? '-' }}</div>
+                                                <div class="font-medium">{{ $user->jobLevel?->name ?? '-' }}</div>
                                                 <div class="text-gray-500">{{ $user->division?->name ?? '-' }}</div>
                                             </div>
                                         </td>
