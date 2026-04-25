@@ -360,12 +360,12 @@
             <x-forms.input-error for="education" class="mt-2" />
         </div>
 
-        <!-- Job title -->
+        <!-- Job Level -->
         <div class="col-span-6 xl:col-span-2">
-            <x-forms.label for="job_title" value="{{ __('Job Title') }}" />
-            <x-forms.tom-select id="job_title" class="mt-1 block w-full" wire:model.live="state.job_title_id"
-                :options="App\Models\JobTitle::all()" placeholder="{{ __('Select Job Title') }}" />
-            <x-forms.input-error for="job_title" class="mt-2" />
+            <x-forms.label for="job_level" value="{{ __('Job Level') }}" />
+            <x-forms.tom-select id="job_level" class="mt-1 block w-full" wire:model.live="state.job_level_id"
+                :options="App\Models\JobLevel::all()" placeholder="{{ __('Select Job Level') }}" />
+            <x-forms.input-error for="job_level" class="mt-2" />
         </div>
 
 

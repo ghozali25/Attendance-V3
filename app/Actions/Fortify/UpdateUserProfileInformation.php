@@ -33,7 +33,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'birth_place' => ['nullable', 'string', 'max:255'],
             'education_id' => ['nullable', 'exists:educations,id'],
             'division_id' => ['nullable', 'exists:divisions,id'],
-            'job_title_id' => ['nullable', 'exists:job_titles,id'],
+            'job_level_id' => ['nullable', 'exists:job_levels,id'],
             'language' => ['nullable', 'string', 'in:id,en'],
         ])->validateWithBag('updateProfileInformation');
 
@@ -68,7 +68,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'birth_place' => $input['birth_place'],
                 'education_id' => $input['education_id'],
                 'division_id' => $input['division_id'],
-                'job_title_id' => $input['job_title_id'],
+                'job_level_id' => $input['job_level_id'],
                 'language' => $input['language'],
             ])->save();
         }
@@ -97,7 +97,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'birth_place' => $input['birth_place'],
             'education_id' => $input['education_id'],
             'division_id' => $input['division_id'],
-            'job_title_id' => $input['job_title_id'],
+            'job_level_id' => $input['job_level_id'],
             'language' => $input['language'],
         ])->save();
 

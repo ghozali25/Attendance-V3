@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'kelurahan_kode',
         'education_id',
         'division_id',
-        'job_title_id',
+        'job_level_id',
         'profile_photo_path',
         'language',
         'basic_salary',

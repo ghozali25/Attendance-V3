@@ -30,7 +30,7 @@ class UserForm extends Form
     public $birth_place = '';
     public $division_id = null;
     public $education_id = null;
-    public $job_title_id = null;
+    public $job_level_id = null;
     public $photo = null;
     public $basic_salary = 0;
     public $hourly_rate = 0;
@@ -64,7 +64,7 @@ class UserForm extends Form
             'birth_place' => ['nullable', 'string', 'max:255'],
             'division_id' => ['nullable', 'exists:divisions,id'],
             'education_id' => ['nullable', 'exists:educations,id'],
-            'job_title_id' => ['nullable', 'exists:job_titles,id'],
+            'job_level_id' => ['nullable', 'exists:job_levels,id'],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
             'basic_salary' => ['nullable', 'numeric', 'min:0'],
             'hourly_rate' => ['nullable', 'numeric', 'min:0'],
@@ -101,7 +101,7 @@ class UserForm extends Form
         $this->birth_place = $user->birth_place;
         $this->division_id = $user->division_id;
         $this->education_id = $user->education_id;
-        $this->job_title_id = $user->job_title_id;
+        $this->job_level_id = $user->job_level_id;
         $this->basic_salary = $user->basic_salary;
         $this->hourly_rate = $user->hourly_rate;
         return $this;
@@ -145,7 +145,7 @@ class UserForm extends Form
     protected function sanitize()
     {
         $this->division_id = $this->division_id ?: null;
-        $this->job_title_id = $this->job_title_id ?: null;
+        $this->job_level_id = $this->job_level_id ?: null;
         $this->education_id = $this->education_id ?: null;
         $this->provinsi_kode = $this->provinsi_kode ?: null;
         $this->kabupaten_kode = $this->kabupaten_kode ?: null;
