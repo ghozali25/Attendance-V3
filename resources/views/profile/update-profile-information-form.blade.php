@@ -374,7 +374,7 @@
         <div class="col-span-6 xl:col-span-2">
             <x-forms.label for="job_level" value="{{ __('Job Level') }}" />
             <select id="job_level" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                wire:model.live="state.job_title_id">
+                wire:model.live="state.job_level_id">
                 <option value="">{{ __('Select Job Level') }}</option>
                 @foreach(App\Models\JobLevel::all() as $jobLevel)
                     <option value="{{ $jobLevel->id }}">{{ $jobLevel->name }}</option>

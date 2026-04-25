@@ -10,28 +10,13 @@ use Laravel\Jetstream\Http\Livewire\UpdateProfileInformationForm as JetstreamUpd
 
 class UpdateProfileInformationForm extends JetstreamUpdateProfileInformationForm
 {
-    public $divisions = [];
-    public $educations = [];
-    public $jobLevels = [];
-
     public function mount()
     {
         parent::mount();
-        
-        try {
-            $this->divisions = Division::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
-            $this->educations = Education::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
-            $this->jobLevels = JobLevel::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
 
-            // Check if job_level_id column exists in users table
-            if (Schema::hasColumn('users', 'job_level_id')) {
-                $this->state['job_level_id'] = $this->user->job_level_id;
-            }
-        } catch (\Exception $e) {
-            // Fallback to empty arrays if queries fail
-            $this->divisions = [];
-            $this->educations = [];
-            $this->jobLevels = [];
+        // Check if job_level_id column exists and add it to state
+        if (Schema::hasColumn('users', 'job_level_id')) {
+            $this->state['job_level_id'] = $this->user->job_level_id;
         }
     }
 
