@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 'phone' => '081234567890',
                 'address' => 'Jakarta',
                 'gender' => 'male',
+                'group' => 'employee',
                 'password' => Hash::make('password'),
             ],
             [
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
                 'phone' => '081234567891',
                 'address' => 'Jakarta',
                 'gender' => 'male',
+                'group' => 'employee',
                 'password' => Hash::make('password'),
             ],
             [
@@ -37,6 +39,7 @@ class UserSeeder extends Seeder
                 'phone' => '081234567892',
                 'address' => 'Jakarta',
                 'gender' => 'male',
+                'group' => 'employee',
                 'password' => Hash::make('password'),
             ],
             [
@@ -45,6 +48,7 @@ class UserSeeder extends Seeder
                 'phone' => '081234567893',
                 'address' => 'Jakarta',
                 'gender' => 'female',
+                'group' => 'employee',
                 'password' => Hash::make('password'),
             ],
             [
@@ -53,6 +57,7 @@ class UserSeeder extends Seeder
                 'phone' => '081234567894',
                 'address' => 'Jakarta',
                 'gender' => 'female',
+                'group' => 'employee',
                 'password' => Hash::make('password'),
             ],
             [
@@ -61,6 +66,7 @@ class UserSeeder extends Seeder
                 'phone' => '081234567895',
                 'address' => 'Jakarta',
                 'gender' => 'male',
+                'group' => 'employee',
                 'password' => Hash::make('password'),
             ],
         ];
@@ -73,6 +79,7 @@ class UserSeeder extends Seeder
                     'phone' => $user['phone'],
                     'address' => $user['address'],
                     'gender' => $user['gender'],
+                    'group' => $user['group'],
                     'password' => $user['password'],
                 ]
             );
