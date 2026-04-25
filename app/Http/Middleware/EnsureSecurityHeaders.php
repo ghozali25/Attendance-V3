@@ -29,19 +29,20 @@ class EnsureSecurityHeaders
         }
 
         // Permissions Policy - Restrict sensitive browser features
-        $response->headers->set('Permissions-Policy', 'geolocation=(self), camera=(self), microphone=()');
+        $response->headers->set('Permissions-Policy', 'geolocation=(self), camera=(self), microphone=(self)');
 
         // Content Security Policy
         $cspConfig = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.bunny.net",
             "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net data:",
             "img-src 'self' data: blob: https: http:",
-            "connect-src 'self' https://tile.openstreetmap.org https://cdn.jsdelivr.net wss:",
+            "connect-src 'self' https://tile.openstreetmap.org https://cdn.jsdelivr.net https://unpkg.com wss:",
             "frame-ancestors 'self'",
             "base-uri 'self'",
             "form-action 'self'",
+            "worker-src 'self' blob:",
         ];
 
         // Allow Vite dev server in local environment
