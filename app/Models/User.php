@@ -172,6 +172,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Division::class);
     }
 
+    public function jobLevel()
+    {
+        return $this->belongsTo(JobLevel::class);
+    }
+
     public function jobTitle()
     {
         return $this->belongsTo(JobTitle::class);
@@ -193,29 +198,25 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getSupervisorAttribute()
     {
-        if (!$this->division_id || !$this->job_title_id || !$this->jobTitle || !$this->jobTitle->jobLevel) {
+        if (!$this->division_id || !$this->job_level_id || !$this->jobLevel) {
             return null;
         }
 
-        $myRank = $this->jobTitle->jobLevel->rank;
+        $myRank = $this->jobLevel->rank;
 
         // Find someone in the same division with a higher rank (smaller rank number)
-        // Check 1: User with a title that has a better rank
         return User::where('division_id', $this->division_id)
             ->where('id', '!=', $this->id)
-            ->whereHas('jobTitle', function ($q) use ($myRank) {
-                // Ensure JobTitle has a JobLevel with better rank
-                $q->whereHas('jobLevel', function ($sq) use ($myRank) {
-                    $sq->where('rank', '<', $myRank);
-                });
+            ->whereHas('jobLevel', function ($q) use ($myRank) {
+                $q->where('rank', '<', $myRank);
             })
-            ->with(['jobTitle.jobLevel'])
+            ->with('jobLevel')
             ->get()
             // Sort by rank descending (e.g. 3 is closer to 4 than 1 is)
             // smaller rank = higher pos. We want the "closest" superior.
             // If I am 4, I want 3, then 2, then 1.
             // So sort by rank desc (3, 2, 1). First one is 3.
-            ->sortByDesc(fn($u) => $u->jobTitle->jobLevel->rank)
+            ->sortByDesc(fn($u) => $u->jobLevel->rank)
             ->first();
     }
 
@@ -224,14 +225,14 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getSubordinatesAttribute()
     {
-        if (!$this->division_id || !$this->jobTitle || !$this->jobTitle->jobLevel) {
+        if (!$this->division_id || !$this->jobLevel) {
             return collect();
         }
 
-        $myRank = $this->jobTitle->jobLevel->rank;
+        $myRank = $this->jobLevel->rank;
 
         return User::where('division_id', $this->division_id)
-            ->whereHas('jobTitle.jobLevel', function ($q) use ($myRank) {
+            ->whereHas('jobLevel', function ($q) use ($myRank) {
                 $q->where('rank', '>', $myRank);
             })
             ->get();
