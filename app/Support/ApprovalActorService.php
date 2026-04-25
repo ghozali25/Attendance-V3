@@ -12,7 +12,11 @@ class ApprovalActorService
      */
     public function subordinateIds(User $user): Collection
     {
-        return $user->subordinates->pluck('id');
+        try {
+            return $user->subordinates->pluck('id');
+        } catch (\Exception $e) {
+            return collect();
+        }
     }
 
     public function hasSubordinates(User $user): bool
