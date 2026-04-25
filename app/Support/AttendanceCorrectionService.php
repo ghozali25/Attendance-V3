@@ -46,8 +46,17 @@ class AttendanceCorrectionService
         return AttendanceCorrection::query()
             ->with(['user', 'attendance.shift', 'requestedShift', 'headApprover', 'reviewer'])
             ->when(! $actor->can('accessAdminPanel'), function (Builder $query) use ($actor) {
-                $query->whereIn('user_id', $this->approvalActors->subordinateIds($actor))
-                    ->where('status', AttendanceCorrection::STATUS_PENDING);
+                try {
+                    $subordinateIds = $this->approvalActors->subordinateIds($actor);
+                    if ($subordinateIds->isNotEmpty()) {
+                        $query->whereIn('user_id', $subordinateIds)
+                            ->where('status', AttendanceCorrection::STATUS_PENDING);
+                    } else {
+                        $query->where('id', 0); // Return no results if no subordinates
+                    }
+                } catch (\Exception $e) {
+                    $query->where('id', 0); // Return no results on error
+                }
             })
             ->when($statusFilter !== 'all', fn (Builder $query) => $query->where('status', $statusFilter))
             ->when($typeFilter !== 'all', fn (Builder $query) => $query->where('request_type', $typeFilter))
