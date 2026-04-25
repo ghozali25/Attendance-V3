@@ -19,6 +19,11 @@ class UpdateProfileInformationForm extends JetstreamUpdateProfileInformationForm
         $this->divisions = Division::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
         $this->educations = Education::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
         $this->jobLevels = JobLevel::all()->map(fn($item) => ['value' => $item->id, 'label' => $item->name])->values()->toArray();
+
+        // Ensure job_level_id is in state
+        if (!isset($this->state['job_level_id'])) {
+            $this->state['job_level_id'] = $this->user->job_level_id;
+        }
     }
 
     /**
