@@ -31,6 +31,7 @@ class AttendanceCorrectionPolicy
 
     public function approve(User $user, AttendanceCorrection $correction): bool
     {
+        // Only admin and superadmin can approve
         if ($user->can('accessAdminPanel')) {
             return in_array($correction->status, [
                 AttendanceCorrection::STATUS_PENDING,
@@ -38,8 +39,7 @@ class AttendanceCorrectionPolicy
             ], true);
         }
 
-        return $correction->status === AttendanceCorrection::STATUS_PENDING
-            && $this->managesUser($user, $correction);
+        return false;
     }
 
     public function reject(User $user, AttendanceCorrection $correction): bool

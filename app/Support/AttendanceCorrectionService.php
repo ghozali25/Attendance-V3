@@ -37,9 +37,7 @@ class AttendanceCorrectionService
             'requested_shift_id' => $payload['requested_shift_id'] ?: null,
             'current_snapshot' => $this->snapshot($attendance),
             'reason' => trim((string) $payload['reason']),
-            'status' => $this->needsSupervisorReview($user)
-                ? AttendanceCorrection::STATUS_PENDING
-                : AttendanceCorrection::STATUS_PENDING_ADMIN,
+            'status' => AttendanceCorrection::STATUS_PENDING_ADMIN, // Always go to admin review
         ]);
     }
 
@@ -69,21 +67,9 @@ class AttendanceCorrectionService
 
     public function approve(AttendanceCorrection $correction, User $actor): string
     {
+        // Only admin/superadmin can approve
         if (! $actor->can('accessAdminPanel')) {
-            if (! $this->canSupervisorReview($correction, $actor) || $correction->status !== AttendanceCorrection::STATUS_PENDING) {
-                throw new AuthorizationException;
-            }
-
-            $correction->update([
-                'status' => AttendanceCorrection::STATUS_PENDING_ADMIN,
-                'head_approved_by' => $actor->id,
-                'head_approved_at' => now(),
-                'rejection_note' => null,
-            ]);
-
-            $this->notifyStatusUpdated($correction);
-
-            return __('Attendance correction forwarded to admin for final review.');
+            throw new AuthorizationException;
         }
 
         DB::transaction(function () use ($correction, $actor) {
@@ -136,7 +122,8 @@ class AttendanceCorrectionService
 
     public function reject(AttendanceCorrection $correction, User $actor, ?string $note = null): string
     {
-        if (! $actor->can('accessAdminPanel') && ! $this->canSupervisorReview($correction, $actor)) {
+        // Only admin/superadmin can reject
+        if (! $actor->can('accessAdminPanel')) {
             throw new AuthorizationException;
         }
 
