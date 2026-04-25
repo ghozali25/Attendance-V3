@@ -75,7 +75,7 @@ class CashAdvanceApprovalService
             return true;
         }
 
-        $myRank = $user->jobTitle?->jobLevel?->rank;
+        $myRank = $user->jobLevel?->rank;
         $myDivisionId = $user->division_id;
 
         if (! $myRank || $myRank > 2) {
@@ -88,11 +88,11 @@ class CashAdvanceApprovalService
             }
 
             return $advance->user->division_id === $myDivisionId
-                && $advance->user->jobTitle?->jobLevel?->rank > $myRank;
+                && $advance->user->jobLevel?->rank > $myRank;
         }
 
         return $advance->user->division_id === $myDivisionId
-            && $advance->user->jobTitle?->jobLevel?->rank > $myRank
+            && $advance->user->jobLevel?->rank > $myRank
             && $advance->status === 'pending';
     }
 
@@ -103,7 +103,7 @@ class CashAdvanceApprovalService
     {
         if ($activeTab === 'requests') {
             $query = CashAdvance::query()->with([
-                'user.jobTitle.jobLevel',
+                'user.jobLevel',
                 'user.kabupaten',
                 'approver',
                 'headApprover',
@@ -119,7 +119,7 @@ class CashAdvanceApprovalService
             }
 
             if (! $user->isAdmin && ! $user->isSuperadmin) {
-                $myRank = $user->jobTitle?->jobLevel?->rank;
+                $myRank = $user->jobLevel?->rank;
                 $myDivisionId = $user->division_id;
 
                 if ($myRank && $myRank <= 2) {
@@ -128,13 +128,13 @@ class CashAdvanceApprovalService
                             $builder->where('status', 'pending_finance')
                                 ->orWhereHas('user', function (Builder $userQuery) use ($myDivisionId, $myRank) {
                                     $userQuery->where('division_id', $myDivisionId)
-                                        ->whereHas('jobTitle.jobLevel', fn (Builder $levelQuery) => $levelQuery->where('rank', '>', $myRank));
+                                        ->whereHas('jobLevel', fn (Builder $levelQuery) => $levelQuery->where('rank', '>', $myRank));
                                 });
                         });
                     } else {
                         $query->whereHas('user', function (Builder $userQuery) use ($myDivisionId, $myRank) {
                             $userQuery->where('division_id', $myDivisionId)
-                                ->whereHas('jobTitle.jobLevel', fn (Builder $levelQuery) => $levelQuery->where('rank', '>', $myRank));
+                                ->whereHas('jobLevel', fn (Builder $levelQuery) => $levelQuery->where('rank', '>', $myRank));
                         });
                     }
                 } else {
@@ -149,7 +149,7 @@ class CashAdvanceApprovalService
         }
 
         $query = User::query()->with([
-            'jobTitle',
+            'jobLevel',
             'kabupaten',
             'cashAdvances' => fn ($query) => $query->whereIn('status', ['approved', 'paid', 'pending', 'pending_finance', 'rejected']),
         ])->whereHas('cashAdvances');
@@ -159,10 +159,10 @@ class CashAdvanceApprovalService
         }
 
         if (! $user->isAdmin && ! $user->isSuperadmin) {
-            $myRank = $user->jobTitle?->jobLevel?->rank;
+            $myRank = $user->jobLevel?->rank;
 
             if ($myRank && $myRank <= 2) {
-                $query->whereHas('jobTitle.jobLevel', fn (Builder $builder) => $builder->where('rank', '>', $myRank));
+                $query->whereHas('jobLevel', fn (Builder $builder) => $builder->where('rank', '>', $myRank));
             } else {
                 $query->where('id', 0);
             }

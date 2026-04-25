@@ -44,7 +44,7 @@ class UserReimbursementService
             'status' => 'pending',
         ]);
 
-        $claim->loadMissing('user.jobTitle.jobLevel', 'user.division');
+        $claim->loadMissing('user.jobLevel', 'user.division');
         $this->notificationRecipients->notifyReimbursementRequested($claim);
 
         return $claim;

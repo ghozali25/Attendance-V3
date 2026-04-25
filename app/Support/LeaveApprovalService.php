@@ -24,7 +24,7 @@ class LeaveApprovalService
         string $search = '',
     ): Collection {
         $query = Attendance::query()
-            ->with(['user.division', 'user.jobTitle'])
+            ->with(['user.division', 'user.jobLevel'])
             ->whereIn('status', Attendance::REQUEST_STATUSES);
 
         if ($statusFilter !== 'all') {

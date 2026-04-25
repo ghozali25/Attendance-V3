@@ -13,7 +13,7 @@ class AppraisalExportPdfController extends Controller
     {
         $this->authorize('exportPdf', $appraisal);
 
-        $appraisal->load(['user.division', 'user.jobTitle', 'evaluator', 'calibrator', 'evaluations.kpiTemplate']);
+        $appraisal->load(['user.division', 'user.jobLevel', 'evaluator', 'calibrator', 'evaluations.kpiTemplate']);
 
         $companyName = Setting::getValue('app.company_name', config('app.name'));
         $pdf = Pdf::loadView('pdf.appraisal-report', compact('appraisal', 'companyName'));

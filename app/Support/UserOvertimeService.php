@@ -65,7 +65,7 @@ class UserOvertimeService
             'status' => 'pending',
         ]);
 
-        $overtime->loadMissing('user.jobTitle.jobLevel', 'user.division');
+        $overtime->loadMissing('user.jobLevel', 'user.division');
 
         if (class_exists(\App\Notifications\OvertimeRequested::class)) {
             $recipientCount = $this->notificationRecipients->notifyOvertimeRequested($overtime);
