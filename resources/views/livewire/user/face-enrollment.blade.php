@@ -245,6 +245,7 @@
                 finalCenterHint: @js(__('Face forward briefly to finish verification')),
             };
             const modelUrls = [
+                'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/model',
                 window.resolveRuntimeAssetUrl ? window.resolveRuntimeAssetUrl('/models') :
                 `${window.location.origin}/models`,
             ].filter((value, index, array) => value && array.indexOf(value) === index);
