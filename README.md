@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="./public/hero-banner.png" alt="Ali Attendance Hero" width="880">
-
 # Ali Attendance
 
 Platform manajemen tenaga kerja yang berorientasi produksi untuk absensi aman, payroll, approval, appraisal, aset, reporting, dan operasi pemeliharaan sistem.
