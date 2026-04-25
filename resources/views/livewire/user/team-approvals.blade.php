@@ -120,7 +120,7 @@
                                                         {{ $leave->user->name }}
                                                     </div>
                                                     <div class="text-xs text-gray-500 dark:text-gray-400">
-                                                        {{ $leave->user->jobTitle->name ?? __('N/A') }}
+                                                        {{ $leave->user->jobLevel?->name ?? __('N/A') }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -220,7 +220,7 @@
                                             {{ $leave->user->name }}
                                         </div>
                                         <div class="truncate text-xs text-gray-500 dark:text-gray-400">
-                                            {{ $leave->user->jobTitle->name ?? __('N/A') }}
+                                            {{ $leave->user->jobLevel?->name ?? __('N/A') }}
                                         </div>
                                     </div>
                                 </div>
@@ -347,7 +347,7 @@
                                                         {{ $reimbursement->user->name }}
                                                     </div>
                                                     <div class="text-xs text-gray-500 dark:text-gray-400">
-                                                        {{ $reimbursement->user->jobTitle->name ?? __('N/A') }}
+                                                        {{ $reimbursement->user->jobLevel?->name ?? __('N/A') }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -447,7 +447,7 @@
                                             {{ $reimbursement->user->name }}
                                         </div>
                                         <div class="truncate text-xs text-gray-500 dark:text-gray-400">
-                                            {{ $reimbursement->user->jobTitle->name ?? __('N/A') }}
+                                            {{ $reimbursement->user->jobLevel?->name ?? __('N/A') }}
                                         </div>
                                     </div>
                                 </div>
@@ -570,7 +570,7 @@
                                                     <div class="text-sm font-medium text-gray-900 dark:text-white">
                                                         {{ $overtime->user->name }}</div>
                                                     <div class="text-xs text-gray-500 dark:text-gray-400">
-                                                        {{ $overtime->user->jobTitle->name ?? __('N/A') }}</div>
+                                                        {{ $overtime->user->jobLevel?->name ?? __('N/A') }}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -660,7 +660,7 @@
                                         <div class="truncate text-sm font-medium text-gray-900 dark:text-white">
                                             {{ $overtime->user->name }}</div>
                                         <div class="truncate text-xs text-gray-500 dark:text-gray-400">
-                                            {{ $overtime->user->jobTitle->name ?? __('N/A') }}</div>
+                                            {{ $overtime->user->jobLevel?->name ?? __('N/A') }}</div>
                                     </div>
                                 </div>
                                 <span
@@ -768,7 +768,7 @@
                                                     <div class="text-sm font-medium text-gray-900 dark:text-white">
                                                         {{ $kasbon->user->name }}</div>
                                                     <div class="text-xs text-gray-500 dark:text-gray-400">
-                                                        {{ $kasbon->user->jobTitle->name ?? __('N/A') }}</div>
+                                                        {{ $kasbon->user->jobLevel?->name ?? __('N/A') }}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -860,7 +860,7 @@
                                         <div class="truncate text-sm font-medium text-gray-900 dark:text-white">
                                             {{ $kasbon->user->name }}</div>
                                         <div class="truncate text-xs text-gray-500 dark:text-gray-400">
-                                            {{ $kasbon->user->jobTitle->name ?? __('N/A') }}</div>
+                                            {{ $kasbon->user->jobLevel?->name ?? __('N/A') }}</div>
                                     </div>
                                 </div>
                                 <span

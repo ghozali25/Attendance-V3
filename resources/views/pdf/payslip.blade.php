@@ -188,7 +188,7 @@
                     <tr>
                         <td class="label-col" style="padding-left: 20px;">JOB TITLE</td>
                         <td class="colon-col">:</td>
-                        <td class="value-col">{{ $payroll->user->jobTitle->name ?? '-' }}</td>
+                        <td class="value-col">{{ $payroll->user->jobLevel?->name ?? '-' }}</td>
                     </tr>
                 </table>
             </td>

@@ -72,7 +72,7 @@
             </div>
             <div class="info-row">
                 <div class="info-label">Position</div>
-                <div class="info-value">{{ $appraisal->user->jobTitle->name ?? '-' }}</div>
+                <div class="info-value">{{ $appraisal->user->jobLevel?->name ?? '-' }}</div>
             </div>
             <div class="info-row">
                 <div class="info-label">Appraisal Period</div>
