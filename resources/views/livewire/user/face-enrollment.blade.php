@@ -813,7 +813,7 @@
                                     faceapi
                                     .detectSingleFace(snapshot, new faceapi.TinyFaceDetectorOptions(options))
                                     .withFaceLandmarks(),
-                                    4000,
+                                    2000,
                                     'face landmark extraction'
                                 );
 
