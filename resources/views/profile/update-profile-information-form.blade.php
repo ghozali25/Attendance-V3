@@ -363,7 +363,7 @@
         <!-- Job Level -->
         <div class="col-span-6 xl:col-span-2">
             <x-forms.label for="job_level" value="{{ __('Job Level') }}" />
-            <x-forms.tom-select id="job_level" class="mt-1 block w-full" wire:model.live="state.job_level_id"
+            <x-forms.tom-select id="job_level" class="mt-1 block w-full" wire:model.live="state.job_title_id"
                 :options="App\Models\JobLevel::pluck('name', 'id')" placeholder="{{ __('Select Job Level') }}" />
             <x-forms.input-error for="job_level" class="mt-2" />
         </div>
