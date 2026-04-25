@@ -1,7 +1,7 @@
 <?php
 /**
  * Enterprise Core Secured
- * (c) RiprLutuk
+ * (c) Ahmad Ghozali
  * Unauthorized modification of this file is prohibited.
  */
 eval(gzinflate(base64_decode('HZPNatxAEITveQofFry+afp3BpNnCRpplBiMA7YxIU+fr7NmF01rurqqunzbH74//Fp/ZL683R99c7czxFNHqoaJSzZzzUi3bCmZNnUoR99T40yJsM5dD6Eu/Lq3sDjkcovdVCW7hU1rcuXw9NAeLQp72AmwgLTpcKvpOeRSi2GRoWnqGSPDw5yOqRsdhdZDlR6QLLubdVs5cg8xqPoOvY13BziTs8VJrWmzrm4HsyRQGZnwM37BVN+5c8RVT2G68W1GB7pHpMFBLtRthaMbHScsHF09M8xODUc6GniICZ+OhxIM9NIECVzqODCiHExc6tG9l5s4vNlFZ/nSreY0bihPq1Sn4B1z3GXGVa7ypmaBnCyrutNsoTtiz8bCWsAaj8LLyGE77wv9wK9E126WW0xOmwn77MkZAaHspTpRm//1a0zK4BEBvKETZuwGsbZgW5afZKN2Ww4OdxXcn9lUbZhwU6LSwI2Q3ODoudlRPltlwDAwbXGj02s2YawuTB7eywv6AzSQY1Vq0C+x2OFBYoQtjEqXlAemIwptcidqIehYvuEbWaogg11pqQ0fYHnl2fnL6jyoklc8QGVUWHGAeUGCnOzvNr17s5GZonyi0nZSA52st6z1D22wAwBGwRW8c+FIatnKydSL5J1eK8YH0C/0gquVbNzGHTZMMhqouGbFqXxbOHqYowAGcFuVy7DHp+dvt8l/8sfn+/v6ut/2KhwU5v4Bkx/nOn6f636b1NfX/nr/+ffl7XrdP6kdT0/P/wA=')));

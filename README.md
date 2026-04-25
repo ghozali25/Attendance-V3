@@ -244,7 +244,7 @@ Direkomendasikan untuk VPS:
 ### 1. Pasang dependency
 
 ```bash
-git clone https://github.com/RiprLutuk/Ali Attendance.git
+git clone https://github.com/ghozali25/Attendance-V3.git
 cd Ali Attendance
 
 composer install
@@ -391,7 +391,7 @@ cd /var/www/Ali Attendance
 ### 2. Ambil source code dan install dependency
 
 ```bash
-git clone https://github.com/RiprLutuk/Ali Attendance.git .
+git clone https://github.com/ghozali25/Attendance-V3.git .
 composer install --no-dev --optimize-autoloader
 bun install
 cp .env.example .env

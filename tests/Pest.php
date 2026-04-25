@@ -178,7 +178,7 @@ function makeEnterpriseTestLicense(array $overrides = []): string
         'expires_at' => now()->addYear()->toDateString(),
         'features' => enterpriseTestFeatures(),
         'max_users' => 0,
-        'author' => 'RiprLutuk(https://riprlutuk.github.io)',
+        'author' => 'Ahmad Ghozali(https://Ahmad Ghozali.github.io)',
         'salt' => bin2hex(random_bytes(16)),
     ], $overrides);
 

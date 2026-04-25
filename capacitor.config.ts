@@ -1,6 +1,6 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
-const defaultServerUrl = 'https://paspapan.pandanteknik.com';
+const defaultServerUrl = 'https://attendance-v3.vercel.app';
 const serverUrl = process.env.CAP_SERVER_URL?.trim() || defaultServerUrl;
 const serverOrigin = new URL(serverUrl);
 const usesCleartext = serverOrigin.protocol === 'http:';
