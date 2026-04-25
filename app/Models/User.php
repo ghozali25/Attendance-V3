@@ -177,10 +177,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(JobLevel::class);
     }
 
-    public function jobTitle()
-    {
-        return $this->belongsTo(JobTitle::class);
-    }
 
     public function attendances()
     {
