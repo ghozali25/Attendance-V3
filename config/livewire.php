@@ -115,7 +115,7 @@ return [
     */
 
     'inject_assets' => false,
-    'asset_url' => env('LIVEWIRE_ASSET_URL'),
+    'asset_url' => null,
 
     /*
     |---------------------------------------------------------------------------
