@@ -36,7 +36,7 @@ class ExportAttendancesController extends Controller
             'month' => $validated['month'] ?? null,
             'year' => $validated['year'] ?? null,
             'division' => $validated['division'] ?? null,
-            'job_title' => $validated['jobTitle'] ?? null,
+            'jobTitle' => $validated['jobTitle'] ?? null,
             'education' => $validated['education'] ?? null,
             'start_date' => $validated['start_date'] ?? null,
             'end_date' => $validated['end_date'] ?? null,
