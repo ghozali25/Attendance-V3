@@ -33,7 +33,7 @@
         <td>{{ $user->basic_salary }}</td>
         <td>{{ $user->hourly_rate }}</td>
         <td>{{ $user->division?->name }}</td>
-        <td>{{ $user->jobTitle?->name }}</td>
+        <td>{{ $user->jobLevel?->name }}</td>
         <td>{{ $user->education?->name }}</td>
         <td>{{ $user->birth_date?->format('Y-m-d') }}</td>
         <td>{{ $user->birth_place }}</td>

@@ -198,7 +198,7 @@
               {{ $employee->division?->name ?? '-' }}
             </td>
             <td>
-              {{ $employee->jobTitle?->name ?? '-' }}
+              {{ $employee->jobLevel?->name ?? '-' }}
             </td>
             @if ($isPerDayFilter)
               <td>

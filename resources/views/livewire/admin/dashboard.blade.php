@@ -704,7 +704,7 @@
                                             <p class="truncate text-sm font-semibold text-slate-900 dark:text-white">
                                                 {{ $employee->name }}</p>
                                             <p class="truncate text-xs text-slate-500 dark:text-slate-400">
-                                                {{ $employee->jobTitle?->name ?? __('Staff') }} •
+                                                {{ $employee->jobLevel?->name ?? __('Staff') }} •
                                                 {{ $employee->division?->name ?? '-' }}</p>
                                         </div>
                                     </div>
