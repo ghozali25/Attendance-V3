@@ -77,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $appends = [
-        'profile_photo_url',
+        // 'profile_photo_url', // Temporarily disabled to debug Livewire serialization issue
     ];
 
     /**
