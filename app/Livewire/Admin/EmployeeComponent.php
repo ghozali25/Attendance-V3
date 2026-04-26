@@ -95,10 +95,11 @@ class EmployeeComponent extends Component
 
     public function updated($property, $value)
     {
-        if ($property === 'form.job_title_id' && $value) {
-            $jobTitle = \App\Models\JobTitle::find($value);
-            if ($jobTitle && $jobTitle->division_id) {
-                $this->form->division_id = $jobTitle->division_id;
+        if ($property === 'form.job_level_id' && $value) {
+            $jobLevel = \App\Models\JobLevel::find($value);
+            if ($jobLevel) {
+                // Job level doesn't have division_id directly
+                // Keep existing division or let user select it
             }
         }
 
@@ -133,17 +134,14 @@ class EmployeeComponent extends Component
                 });
             })
             ->when($this->division, fn(Builder $q) => $q->where('division_id', $this->division))
-            ->when($this->jobTitle, fn(Builder $q) => $q->where('job_title_id', $this->jobTitle))
+            ->when($this->jobTitle, fn(Builder $q) => $q->where('job_level_id', $this->jobTitle))
             ->when($this->education, fn(Builder $q) => $q->where('education_id', $this->education))
-            ->with(['division', 'jobTitle', 'education'])
+            ->with(['division', 'jobLevel', 'education'])
             ->orderBy('name')
             ->paginate(20);
 
-        $availableJobTitles = \App\Models\JobTitle::query()
-            ->when($this->form->division_id, function ($q) {
-                $q->where('division_id', $this->form->division_id)
-                    ->orWhereNull('division_id'); // Include global titles if any
-            })
+        $availableJobLevels = \App\Models\JobLevel::query()
+            ->orderBy('rank')
             ->get();
 
         $provinces = \App\Models\Wilayah::whereRaw('LENGTH(kode) = 2')->orderBy('nama')->get();
@@ -153,7 +151,7 @@ class EmployeeComponent extends Component
 
         return view('livewire.admin.employees', [
             'users' => $users,
-            'availableJobTitles' => $availableJobTitles,
+            'availableJobTitles' => $availableJobLevels,
             'provinces' => $provinces,
             'regencies' => $regencies,
             'districts' => $districts,

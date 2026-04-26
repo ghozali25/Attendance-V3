@@ -50,7 +50,7 @@ class ReimbursementPolicy
 
     private function isFinanceHead(User $user): bool
     {
-        return (int) ($user->jobTitle?->jobLevel?->rank ?? 99) <= 2
+        return (int) ($user->jobLevel?->rank ?? 99) <= 2
             && strtolower((string) $user->division?->name) === 'finance';
     }
 }

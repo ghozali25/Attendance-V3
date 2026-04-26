@@ -61,8 +61,8 @@ class AttendanceComponent extends Component
                 });
             })
             ->when($this->division, fn(Builder $q) => $q->where('division_id', $this->division))
-            ->when($this->jobTitle, fn(Builder $q) => $q->where('job_title_id', $this->jobTitle))
-            ->with(['division', 'jobTitle'])
+            ->when($this->jobTitle, fn(Builder $q) => $q->where('job_level_id', $this->jobTitle))
+            ->with(['division', 'jobLevel'])
             ->paginate(20)->through(function (User $user) use ($start, $end) {
                 $cacheKey = "attendance-{$user->id}-{$start->format('Ymd')}-{$end->format('Ymd')}";
                 

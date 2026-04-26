@@ -23,7 +23,7 @@ class UsersExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSiz
     public function query(): Builder
     {
         return User::query()
-            ->with(['division:id,name', 'jobTitle:id,name', 'education:id,name'])
+            ->with(['division:id,name', 'jobLevel:id,name', 'education:id,name'])
             ->whereIn('group', $this->groups)
             ->orderBy('id');
     }
@@ -67,7 +67,7 @@ class UsersExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSiz
             $user->basic_salary,
             $user->hourly_rate,
             $user->division?->name,
-            $user->jobTitle?->name,
+            $user->jobLevel?->name,
             $user->education?->name,
             $user->birth_date?->format('Y-m-d'),
             $user->birth_place,
