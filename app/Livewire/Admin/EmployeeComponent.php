@@ -104,7 +104,7 @@ class EmployeeComponent extends Component
         }
 
         if ($property === 'form.division_id') {
-            $this->form->job_title_id = null;
+            $this->form->job_level_id = null;
         }
 
         if ($property === 'form.provinsi_kode') {
