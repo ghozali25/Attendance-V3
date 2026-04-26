@@ -194,26 +194,28 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getSupervisorAttribute()
     {
-        if (!$this->division_id || !$this->job_level_id || !$this->jobLevel) {
+        try {
+            if (!$this->division_id || !$this->job_level_id || !$this->jobLevel) {
+                return null;
+            }
+
+            $myRank = $this->jobLevel->rank;
+
+            // Find someone in the same division with a higher rank (smaller rank number)
+            return User::where('division_id', $this->division_id)
+                ->where('id', '!=', $this->id)
+                ->whereHas('jobLevel', function ($q) use ($myRank) {
+                    $q->where('rank', '<', $myRank);
+                })
+                ->with('jobLevel')
+                ->get()
+                // Sort by rank descending (e.g. 3 is closer to 4 than 1 is)
+                // smaller rank = higher pos. We want the "closest" superior.
+                ->sortByDesc(fn($u) => $u->jobLevel->rank)
+                ->first();
+        } catch (\Exception $e) {
             return null;
         }
-
-        $myRank = $this->jobLevel->rank;
-
-        // Find someone in the same division with a higher rank (smaller rank number)
-        return User::where('division_id', $this->division_id)
-            ->where('id', '!=', $this->id)
-            ->whereHas('jobLevel', function ($q) use ($myRank) {
-                $q->where('rank', '<', $myRank);
-            })
-            ->with('jobLevel')
-            ->get()
-            // Sort by rank descending (e.g. 3 is closer to 4 than 1 is)
-            // smaller rank = higher pos. We want the "closest" superior.
-            // If I am 4, I want 3, then 2, then 1.
-            // So sort by rank desc (3, 2, 1). First one is 3.
-            ->sortByDesc(fn($u) => $u->jobLevel->rank)
-            ->first();
     }
 
     /**
