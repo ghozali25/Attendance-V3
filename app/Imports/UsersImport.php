@@ -5,7 +5,7 @@ namespace App\Imports;
 use App\Models\Division;
 use App\Models\Education;
 use App\Models\ImportExportRun;
-use App\Models\JobTitle;
+use App\Models\JobLevel;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -52,7 +52,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFai
         $this->processedRows++;
         $now = now();
         $divisionId = $this->resolveReferenceId(Division::class, $row['division'] ?? null);
-        $jobTitleId = $this->resolveReferenceId(JobTitle::class, $row['job_title'] ?? null);
+        $jobLevelId = $this->resolveReferenceId(JobLevel::class, $row['job_level'] ?? null);
         $educationId = $this->resolveReferenceId(Education::class, $row['education'] ?? null);
 
         $attributes = [
@@ -70,7 +70,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFai
             'address' => $row['address'],
             'education_id' => $educationId,
             'division_id' => $divisionId,
-            'job_title_id' => $jobTitleId,
+            'job_level_id' => $jobLevelId,
             'password' => Hash::make($row['password']),
             'created_at' => isset($row['created_at']) ? $row['created_at'] : $now,
             'updated_at' => $now,
