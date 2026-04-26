@@ -81,52 +81,66 @@ class AttendanceCorrectionService
             throw new AuthorizationException;
         }
 
-        DB::transaction(function () use ($correction, $actor) {
-            $correction->loadMissing(['user', 'attendance.shift', 'requestedShift']);
+        try {
+            DB::transaction(function () use ($correction, $actor) {
+                $correction->loadMissing(['user', 'attendance.shift', 'requestedShift']);
 
-            $attendance = $correction->attendance ?? Attendance::query()->firstOrNew([
-                'user_id' => $correction->user_id,
-                'date' => $correction->attendance_date->toDateString(),
+                $attendance = $correction->attendance ?? Attendance::query()->firstOrNew([
+                    'user_id' => $correction->user_id,
+                    'date' => $correction->attendance_date->toDateString(),
+                ]);
+
+                $attendance->user_id = $correction->user_id;
+                $attendance->date = $correction->attendance_date->toDateString();
+
+                if ($correction->requested_shift_id) {
+                    $attendance->shift_id = $correction->requested_shift_id;
+                }
+
+                if ($correction->requested_time_in) {
+                    $attendance->time_in = $correction->requested_time_in;
+                }
+
+                if ($correction->requested_time_out) {
+                    $attendance->time_out = $correction->requested_time_out;
+                }
+
+                $attendance->status = $this->resolvedStatus(
+                    $attendance->time_in ? Carbon::parse($attendance->time_in) : null,
+                    $correction->requestedShift ?? $attendance->shift,
+                    (int) \App\Models\Setting::getValue('attendance.grace_period', 10),
+                    $attendance->status,
+                );
+
+                $attendance->save();
+
+                $correction->update([
+                    'attendance_id' => $attendance->id,
+                    'status' => AttendanceCorrection::STATUS_APPROVED,
+                    'reviewed_by' => $actor->id,
+                    'reviewed_at' => now(),
+                    'rejection_note' => null,
+                ]);
+
+                Attendance::clearUserAttendanceCache($correction->user, Carbon::parse($correction->attendance_date));
+            });
+
+            try {
+                $this->notifyStatusUpdated($correction);
+            } catch (\Exception $e) {
+                // Ignore notification errors to not block approval
+            }
+
+            return __('Attendance correction approved and applied.');
+        } catch (\Exception $e) {
+            \Log::error('Attendance correction approval failed', [
+                'correction_id' => $correction->id,
+                'actor_id' => $actor->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
-
-            $attendance->user_id = $correction->user_id;
-            $attendance->date = $correction->attendance_date->toDateString();
-
-            if ($correction->requested_shift_id) {
-                $attendance->shift_id = $correction->requested_shift_id;
-            }
-
-            if ($correction->requested_time_in) {
-                $attendance->time_in = $correction->requested_time_in;
-            }
-
-            if ($correction->requested_time_out) {
-                $attendance->time_out = $correction->requested_time_out;
-            }
-
-            $attendance->status = $this->resolvedStatus(
-                $attendance->time_in ? Carbon::parse($attendance->time_in) : null,
-                $correction->requestedShift ?? $attendance->shift,
-                (int) \App\Models\Setting::getValue('attendance.grace_period', 10),
-                $attendance->status,
-            );
-
-            $attendance->save();
-
-            $correction->update([
-                'attendance_id' => $attendance->id,
-                'status' => AttendanceCorrection::STATUS_APPROVED,
-                'reviewed_by' => $actor->id,
-                'reviewed_at' => now(),
-                'rejection_note' => null,
-            ]);
-
-            Attendance::clearUserAttendanceCache($correction->user, Carbon::parse($correction->attendance_date));
-        });
-
-        $this->notifyStatusUpdated($correction);
-
-        return __('Attendance correction approved and applied.');
+            throw $e;
+        }
     }
 
     public function reject(AttendanceCorrection $correction, User $actor, ?string $note = null): string
@@ -136,16 +150,30 @@ class AttendanceCorrectionService
             throw new AuthorizationException;
         }
 
-        $correction->update([
-            'status' => AttendanceCorrection::STATUS_REJECTED,
-            'reviewed_by' => $actor->id,
-            'reviewed_at' => now(),
-            'rejection_note' => $note,
-        ]);
+        try {
+            $correction->update([
+                'status' => AttendanceCorrection::STATUS_REJECTED,
+                'reviewed_by' => $actor->id,
+                'reviewed_at' => now(),
+                'rejection_note' => $note,
+            ]);
 
-        $this->notifyStatusUpdated($correction);
+            try {
+                $this->notifyStatusUpdated($correction);
+            } catch (\Exception $e) {
+                // Ignore notification errors to not block rejection
+            }
 
-        return __('Attendance correction rejected.');
+            return __('Attendance correction rejected.');
+        } catch (\Exception $e) {
+            \Log::error('Attendance correction rejection failed', [
+                'correction_id' => $correction->id,
+                'actor_id' => $actor->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            throw $e;
+        }
     }
 
     private function snapshot(?Attendance $attendance): ?array

@@ -46,10 +46,19 @@ class AttendanceCorrectionManager extends Component
 
     public function approve(int $id): void
     {
-        $correction = AttendanceCorrection::findOrFail($id);
-        $this->authorize('approve', $correction);
+        try {
+            $correction = AttendanceCorrection::findOrFail($id);
+            $this->authorize('approve', $correction);
 
-        session()->flash('success', $this->correctionService->approve($correction, auth()->user()));
+            session()->flash('success', $this->correctionService->approve($correction, auth()->user()));
+        } catch (\Exception $e) {
+            session()->flash('error', __('Failed to approve attendance correction: ') . $e->getMessage());
+            \Log::error('Livewire approve failed', [
+                'id' => $id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+        }
     }
 
     public function confirmReject(int $id): void
@@ -61,18 +70,27 @@ class AttendanceCorrectionManager extends Component
 
     public function reject(): void
     {
-        if (! $this->selectedId) {
-            return;
+        try {
+            if (! $this->selectedId) {
+                return;
+            }
+
+            $correction = AttendanceCorrection::findOrFail($this->selectedId);
+            $this->authorize('reject', $correction);
+
+            session()->flash('success', $this->correctionService->reject($correction, auth()->user(), $this->rejectionNote ?: null));
+
+            $this->confirmingRejection = false;
+            $this->selectedId = null;
+            $this->rejectionNote = '';
+        } catch (\Exception $e) {
+            session()->flash('error', __('Failed to reject attendance correction: ') . $e->getMessage());
+            \Log::error('Livewire reject failed', [
+                'id' => $this->selectedId,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
         }
-
-        $correction = AttendanceCorrection::findOrFail($this->selectedId);
-        $this->authorize('reject', $correction);
-
-        session()->flash('success', $this->correctionService->reject($correction, auth()->user(), $this->rejectionNote ?: null));
-
-        $this->confirmingRejection = false;
-        $this->selectedId = null;
-        $this->rejectionNote = '';
     }
 
     public function cancelReject(): void
@@ -84,15 +102,27 @@ class AttendanceCorrectionManager extends Component
 
     public function render()
     {
-        $this->authorize('viewAdminAny', AttendanceCorrection::class);
+        try {
+            $this->authorize('viewAdminAny', AttendanceCorrection::class);
 
-        $corrections = $this->correctionService
-            ->managementQuery(auth()->user(), $this->statusFilter, $this->typeFilter, $this->search)
-            ->paginate(12);
+            $corrections = $this->correctionService
+                ->managementQuery(auth()->user(), $this->statusFilter, $this->typeFilter, $this->search)
+                ->paginate(12);
 
-        return view('livewire.admin.attendance-correction-manager', [
-            'corrections' => $corrections,
-            'requestTypes' => AttendanceCorrection::requestTypes(),
-        ]);
+            return view('livewire.admin.attendance-correction-manager', [
+                'corrections' => $corrections,
+                'requestTypes' => AttendanceCorrection::requestTypes(),
+            ]);
+        } catch (\Exception $e) {
+            session()->flash('error', __('Failed to load attendance corrections: ') . $e->getMessage());
+            \Log::error('Livewire render failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return view('livewire.admin.attendance-correction-manager', [
+                'corrections' => collect(),
+                'requestTypes' => AttendanceCorrection::requestTypes(),
+            ]);
+        }
     }
 }
