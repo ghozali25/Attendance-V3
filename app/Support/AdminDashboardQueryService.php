@@ -288,7 +288,11 @@ class AdminDashboardQueryService
     private function managedUserIds(User $admin): Collection
     {
         if ($admin->group === 'user') {
-            return $admin->subordinates->pluck('id');
+            try {
+                return $admin->subordinates->pluck('id');
+            } catch (\Exception $e) {
+                return collect();
+            }
         }
 
         return User::query()->managedBy($admin)->pluck('id');

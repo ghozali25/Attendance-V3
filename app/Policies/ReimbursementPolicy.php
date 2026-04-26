@@ -41,8 +41,12 @@ class ReimbursementPolicy
 
     private function canReview(User $user, Reimbursement $reimbursement): bool
     {
-        if ($user->subordinates->contains('id', $reimbursement->user_id)) {
-            return true;
+        try {
+            if ($user->subordinates->contains('id', $reimbursement->user_id)) {
+                return true;
+            }
+        } catch (\Exception $e) {
+            // Ignore error and continue
         }
 
         return $this->isFinanceHead($user) && $reimbursement->status === 'pending_finance';

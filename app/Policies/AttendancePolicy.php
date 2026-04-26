@@ -49,6 +49,10 @@ class AttendancePolicy
             return true;
         }
 
-        return $user->subordinates->contains('id', $attendance->user_id);
+        try {
+            return $user->subordinates->contains('id', $attendance->user_id);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

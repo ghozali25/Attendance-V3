@@ -49,6 +49,10 @@ class AttendanceCorrectionPolicy
 
     protected function managesUser(User $user, AttendanceCorrection $correction): bool
     {
-        return $user->subordinates->pluck('id')->contains($correction->user_id);
+        try {
+            return $user->subordinates->pluck('id')->contains($correction->user_id);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
