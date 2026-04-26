@@ -171,7 +171,12 @@ class LeaveRequestService
 
     protected function notifyLeaveRequest(User $user, Attendance $attendance, Carbon $fromDate, Carbon $toDate): void
     {
-        $supervisor = $user->supervisor;
+        try {
+            $supervisor = $user->supervisor;
+        } catch (\Exception $e) {
+            $supervisor = null;
+        }
+
         $admins = User::query()->whereIn('group', ['admin', 'superadmin'])->get();
 
         $notifiable = $supervisor

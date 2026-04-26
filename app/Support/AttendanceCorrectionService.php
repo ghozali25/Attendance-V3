@@ -189,7 +189,11 @@ class AttendanceCorrectionService
 
     private function needsSupervisorReview(User $user): bool
     {
-        return (bool) optional($user->supervisor)->id;
+        try {
+            return (bool) optional($user->supervisor)->id;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     private function canSupervisorReview(AttendanceCorrection $correction, User $actor): bool

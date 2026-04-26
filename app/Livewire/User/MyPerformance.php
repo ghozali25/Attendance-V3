@@ -79,7 +79,12 @@ class MyPerformance extends Component
             'employee_notes' => $this->employeeNotes,
         ]);
 
-        $supervisor = auth()->user()->supervisor;
+        try {
+            $supervisor = auth()->user()->supervisor;
+        } catch (\Exception $e) {
+            $supervisor = null;
+        }
+
         if ($supervisor) {
             $supervisor->notify(new \App\Notifications\AppraisalActionNotification(
                 $appraisal, 

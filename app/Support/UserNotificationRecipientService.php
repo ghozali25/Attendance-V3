@@ -38,8 +38,12 @@ class UserNotificationRecipientService
     {
         $recipients = $this->admins();
 
-        if ($user->supervisor) {
-            $recipients = $recipients->push($user->supervisor);
+        try {
+            if ($user->supervisor) {
+                $recipients = $recipients->push($user->supervisor);
+            }
+        } catch (\Exception $e) {
+            // Ignore supervisor access error
         }
 
         return $recipients->unique('id')->values();
@@ -50,8 +54,12 @@ class UserNotificationRecipientService
      */
     public function supervisorOrAdmins(User $user): Collection
     {
-        if ($user->supervisor) {
-            return collect([$user->supervisor]);
+        try {
+            if ($user->supervisor) {
+                return collect([$user->supervisor]);
+            }
+        } catch (\Exception $e) {
+            // Ignore supervisor access error
         }
 
         return $this->admins();
