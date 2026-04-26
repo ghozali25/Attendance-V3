@@ -69,6 +69,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_secret',
         'supervisor',
         'subordinates',
+        'isAdmin',
+        'isSuperadmin',
+        'isUser',
+        'isNotAdmin',
+        'isDemo',
     ];
 
     /**

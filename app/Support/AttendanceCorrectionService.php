@@ -83,7 +83,11 @@ class AttendanceCorrectionService
 
         try {
             DB::transaction(function () use ($correction, $actor) {
-                $correction->loadMissing(['user', 'attendance.shift', 'requestedShift']);
+                try {
+                    $correction->loadMissing(['user', 'attendance.shift', 'requestedShift']);
+                } catch (\Exception $e) {
+                    // Ignore load errors and continue
+                }
 
                 $attendance = $correction->attendance ?? Attendance::query()->firstOrNew([
                     'user_id' => $correction->user_id,
@@ -122,7 +126,11 @@ class AttendanceCorrectionService
                     'rejection_note' => null,
                 ]);
 
-                Attendance::clearUserAttendanceCache($correction->user, Carbon::parse($correction->attendance_date));
+                try {
+                    Attendance::clearUserAttendanceCache($correction->user, Carbon::parse($correction->attendance_date));
+                } catch (\Exception $e) {
+                    // Ignore cache clearing errors
+                }
             });
 
             try {
