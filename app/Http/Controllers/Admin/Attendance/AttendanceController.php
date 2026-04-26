@@ -35,7 +35,7 @@ class AttendanceController extends Controller
             'startDate' => 'nullable|date_format:Y-m-d',
             'endDate' => 'nullable|date_format:Y-m-d',
             'division' => 'nullable|exists:divisions,id',
-            'job_title' => 'nullable|exists:job_titles,id',
+            'jobTitle' => 'nullable|exists:job_levels,id',
         ]);
 
         if (!$request->date && !$request->month && !$request->week && (!$request->startDate || !$request->endDate)) {

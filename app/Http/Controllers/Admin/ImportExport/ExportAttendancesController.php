@@ -24,17 +24,19 @@ class ExportAttendancesController extends Controller
             'month' => ['nullable', 'date'],
             'year' => ['nullable', 'integer'],
             'division' => ['nullable', 'integer'],
-            'job_title' => ['nullable', 'integer'],
+            'jobTitle' => ['nullable', 'exists:job_levels,id'],
             'education' => ['nullable', 'integer'],
             'start_date' => ['nullable', 'date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
         ]);
 
+        $validated = $request->validated();
+
         $run = $runService->queueAttendanceExport($request->user(), [
             'month' => $validated['month'] ?? null,
             'year' => $validated['year'] ?? null,
             'division' => $validated['division'] ?? null,
-            'job_title' => $validated['job_title'] ?? null,
+            'job_title' => $validated['jobTitle'] ?? null,
             'education' => $validated['education'] ?? null,
             'start_date' => $validated['start_date'] ?? null,
             'end_date' => $validated['end_date'] ?? null,
